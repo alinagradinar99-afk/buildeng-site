@@ -799,6 +799,21 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
 
 <script>
 document.documentElement.classList.add('js');
+/* типограф: короткие предлоги, союзы и частицы не остаются в конце строки; тире не переносится в начало строки.
+   Работает и для текста, который дорисовывается скриптом (каталог, слайдер, поиск). */
+(function(){
+  const SHORT=/(^|[\s(«"„—–\/])([А-Яа-яЁёA-Za-z]{1,2}|[Дд]ля|[Бб]ез|[Пп]ри|[Пп]од|[Нн]ад|[Пп]ро|[Ии]ли|[Чч]тобы|[Ии]з-за|[Ии]з-под) /g;
+  const DASH=/ ([—–])/g, SKIP=/^(SCRIPT|STYLE|TEXTAREA|INPUT|CODE|PRE)$/;
+  function fix(t){ return t.replace(SHORT,'$1$2 ').replace(SHORT,'$1$2 ').replace(DASH,' $1'); }
+  function walk(root){
+    if(root.nodeType===3){ const p=root.parentNode; if(p&&!SKIP.test(p.nodeName)){ const v=fix(root.nodeValue); if(v!==root.nodeValue) root.nodeValue=v; } return; }
+    if(root.nodeType!==1||SKIP.test(root.nodeName)) return;
+    const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT); let n;
+    while((n=w.nextNode())){ if(SKIP.test(n.parentNode.nodeName)) continue; const v=fix(n.nodeValue); if(v!==n.nodeValue) n.nodeValue=v; }
+  }
+  function start(){ walk(document.body); new MutationObserver(ms=>ms.forEach(m=>{ if(m.type==='characterData') walk(m.target); else m.addedNodes.forEach(walk); })).observe(document.body,{childList:true,subtree:true,characterData:true}); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+})();
 (function(){
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
