@@ -165,9 +165,11 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
 .h-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:#15191D}
 .h-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
 .h-media video.on{opacity:1}
-.h-media::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(10,12,14,.28)}
+.h-media::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(10,12,14,.42)}
 .h-media::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(10,12,14,.62) 0%,rgba(10,12,14,.3) 48%,rgba(10,12,14,.05) 100%),linear-gradient(0deg,rgba(10,12,14,.62) 0%,rgba(10,12,14,0) 50%),linear-gradient(180deg,rgba(10,12,14,.45) 0%,rgba(10,12,14,0) 22%)}
-.vctl{position:absolute;z-index:3;right:var(--gxr);bottom:24px;display:flex;align-items:center;gap:12px;border:0;background:none;color:var(--white);cursor:pointer;font-family:var(--f-mono);font-size:11px;opacity:.7}
+.h-side{display:flex;flex-direction:column;align-items:flex-end;gap:16px;min-width:0}
+.h-side .h-card{align-self:stretch}
+.vctl{position:relative;z-index:3;padding:0;display:flex;align-items:center;gap:12px;border:0;background:none;color:var(--white);cursor:pointer;font-family:var(--f-mono);font-size:11px;opacity:.7}
 .vctl:hover{opacity:1}
 .vctl i{width:36px;height:36px;border-radius:18px;border:1px solid var(--d-line2);display:flex;align-items:center;justify-content:center}
 .vctl .ic-play{display:none}
@@ -419,19 +421,17 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
 .nav{margin:0 16px 0 auto}
 .ib{border-radius:2px;margin-right:0;border-color:rgba(255,255,255,.14)}
 .biz{border-radius:2px}
-/* при скролле шапка остаётся той же тёмной панелью, только плотнее */
-.hdr.solid{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;color:var(--white);--mark-a:#FFFFFF;--mark-b:var(--signal)}
-.hdr.solid > .gx{padding-top:10px}
-.hdr.solid .bar-main{margin-top:0;height:62px;padding:8px;background:rgba(14,17,20,.78);border-color:rgba(255,255,255,.08);box-shadow:0 12px 32px rgba(10,12,14,.22)}
-.hdr.solid .sf{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.07)}
-.hdr.solid .sf:focus-within{background:var(--white);border-color:var(--white);color:var(--ink)}
-.hdr.solid .ib{border-color:rgba(255,255,255,.14)}
-.hdr.solid .ib:hover{background:rgba(255,255,255,.08)}
-.hdr.solid .biz{background:var(--white);color:var(--ink)}
+/* при скролле на светлые блоки — белая шапка во всю ширину, как в прошлой версии */
+.hdr.solid{background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);box-shadow:0 1px 0 var(--line);--mark-a:#11375E;--mark-b:#5FA8DC}
+.hdr.solid > .gx{padding-top:0}
+.hdr.solid .bar-main{margin-top:0;height:68px;padding:0;background:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.hdr.solid .ib{border-color:var(--line)}
+.hdr.solid .ib:hover{background:var(--s50)}
+.hdr.solid .biz{background:var(--ink);color:var(--white)}
+.hdr.solid #searchBtn[aria-expanded="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
 /* шапка по макету: одна полоса — логотип, каталог, разделы, контакты, поиск-иконка, сравнение, корзина, кабинет */
 .top{display:none!important}
 .bar-main{position:relative;background:rgba(32,49,67,.9);border-color:rgba(255,255,255,.06)}
-.hdr.solid .bar-main{background:rgba(32,49,67,.95)}
 .hdr > .gx{padding-top:30px}
 .logo{margin-right:32px}
 .nav{margin:0 auto 0 22px;gap:22px;font-size:15px}
@@ -713,18 +713,14 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
 
 <main id="top">
   <section class="hero v-video" id="hero">
-    <div class="h-media" aria-hidden="true" style="background:#15191D url(video/valves-poster.jpg) center/cover"><video class="on" muted playsinline preload="auto" poster="video/valves-poster.jpg"></video><video muted playsinline preload="none"></video></div>
-    <button class="vctl" id="vctl" type="button" aria-pressed="true" aria-label="Пауза видео"><span id="vctlT">пауза</span><i><svg class="ic-pause" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="ic-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></i></button>
+    <div class="h-media" aria-hidden="true" style="background:#15191D url(video/pipes-poster.jpg) center/cover"><video class="on" muted loop playsinline preload="auto" poster="video/pipes-poster.jpg"></video></div>
     <div class="hero-in gx">
       <div class="h-copy">
         <h1>Инженерное оборудование для&nbsp;объектов <em>с&nbsp;подбором<br class="br"> и&nbsp;комплектацией</em></h1>
         <p class="h-lead">Поставляем инженерное оборудование 20+ брендов, подбираем аналоги по спецификации и комплектуем объекты под ключ</p>
-        <div class="h-stats">
-          <div><b>2012</b><span>на рынке инженерного<br>оборудования</span></div>
-          <div><b>20+</b><span>мировых и российских<br>брендов</span></div>
-          <div><b>ПТО</b><span>свой инженерный<br>отдел подбора</span></div>
-        </div>
       </div>
+      <div class="h-side">
+        <button class="vctl" id="vctl" type="button" aria-pressed="true" aria-label="Пауза видео"><span id="vctlT">пауза</span><i><svg class="ic-pause" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="ic-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></i></button>
       <div class="h-card" aria-roledescription="карусель" aria-label="Оборудование в каталоге">
         <div class="slides" id="slides">
           <div class="slide on" data-group="pumps" data-cap="Насосное оборудование Wilo и ФОРТА: циркуляционные, многоступенчатые и повысительные — 67 позиций"><img class="s-pump" src="img/hero/pump.png" alt="Насос многоступенчатый Wilo MHI"></div>
@@ -736,6 +732,7 @@ h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
         <a class="btn btn-signal" href="#catalog" id="slideGo">Перейти в каталог <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <div class="dots" id="dots"><button type="button" aria-label="Слайд 1" aria-pressed="true"></button><button type="button" aria-label="Слайд 2" aria-pressed="false"></button><button type="button" aria-label="Слайд 3" aria-pressed="false"></button></div></div>
+      </div>
       </div>
     </div>
   </section>
@@ -821,19 +818,14 @@ document.documentElement.classList.add('js');
   function onScroll(){ hdr.classList.toggle('solid', scrollY > hero.offsetHeight - 90); }
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-  /* hero video: несколько роликов по очереди с плавной сменой, пауза по кнопке */
-  const clips=['video/valves.mp4','video/gauges.mp4','video/engineer.mp4','video/blueprint.mp4'], CLIP_MS=7000;
-  const vids=$$('.h-media video'), vctl=$('#vctl'); let ci=0, cur=0, ctimer, playing=false;
+  /* hero video: ролик на фоне, замедлен для спокойного длинного цикла; пауза по кнопке */
+  const hv=$('.h-media video'), vctl=$('#vctl'), RATE=.6; let playing=false;
   function setPlaying(on){ playing=on; vctl.setAttribute('aria-pressed',String(on)); vctl.setAttribute('aria-label', on?'Пауза видео':'Воспроизвести видео'); $('#vctlT').textContent = on?'пауза':'видео'; }
-  function arm(){ clearTimeout(ctimer); if(playing) ctimer=setTimeout(nextClip,CLIP_MS); }
-  function nextClip(){ const nv=vids[1-cur], ov=vids[cur]; ci=(ci+1)%clips.length; nv.src=clips[ci]; nv.currentTime=0;
-    const go=()=>{ nv.classList.add('on'); ov.classList.remove('on'); cur=1-cur; setTimeout(()=>ov.pause(),1300); vids[1-cur].preload='auto'; arm(); };
-    const p=nv.play(); if(p&&p.then) p.then(go).catch(go); else go(); }
-  vids.forEach(v=>{ v.loop=true; });
-  vids[0].src=clips[0];
+  hv.defaultPlaybackRate=RATE; hv.addEventListener('loadedmetadata',()=>{ hv.playbackRate=RATE; });
+  hv.src='video/pipes.mp4'; hv.playbackRate=RATE;
   if(reduce){ setPlaying(false); }
-  else { const p=vids[0].play(); if(p&&p.catch) p.then(()=>{setPlaying(true);arm();}).catch(()=>setPlaying(false)); else {setPlaying(true);arm();} }
-  vctl.addEventListener('click',()=>{ const v=vids[cur]; if(!playing){ v.play(); setPlaying(true); arm(); } else { v.pause(); setPlaying(false); clearTimeout(ctimer); } });
+  else { const p=hv.play(); if(p&&p.catch) p.then(()=>setPlaying(true)).catch(()=>setPlaying(false)); else setPlaying(true); }
+  vctl.addEventListener('click',()=>{ if(!playing){ hv.play(); setPlaying(true); } else { hv.pause(); setPlaying(false); } });
 
   /* hero card carousel */
   const slides=$$('.slide'), dots=$$('#dots button'); let si=0, stimer;
