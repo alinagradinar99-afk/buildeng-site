@@ -931,7 +931,7 @@ document.documentElement.classList.add('js');
     }
     $$('[data-q]',sp).forEach(b=>b.addEventListener('click',()=>{q.value=b.dataset.q;renderS();q.focus();}));
     $$('[data-g]',sp).forEach(b=>b.addEventListener('click',()=>{sp.hidden=true;openMega(b.dataset.g);}));
-    $$('.res',sp).forEach(a=>a.addEventListener('click',e=>{e.preventDefault();sp.hidden=true;toast('Карточка товара — следующий этап');}));
+    $$('.res',sp).forEach(a=>a.addEventListener('click',e=>{e.preventDefault();sp.hidden=true;location.href='product.html';}));
     bindAdv(sp);
   }
   // поиск открывается по кнопке-лупе в шапке
